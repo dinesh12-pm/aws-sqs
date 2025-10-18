@@ -1,6 +1,12 @@
 pipeline {
     agent any
 
+    // 👇 Auto-install tools section
+    tools {
+        maven 'Maven_3_9_9'   // Name must match "Manage Jenkins → Tools → Maven installations"
+        jdk 'JDK17'           // Optional, add if Java auto-install is set up in Jenkins
+    }
+
     environment {
         AWS_REGION = 'ap-south-1'
         AWS_ACCESS_KEY_ID = credentials('aws-access-key')
@@ -16,22 +22,40 @@ pipeline {
 
         stage('Build') {
             steps {
-                echo 'Building project...'
-                sh 'mvn clean package -DskipTests'
+                echo '🚧 Building project with Maven...'
+                script {
+                    if (isUnix()) {
+                        sh 'mvn clean package -DskipTests'
+                    } else {
+                        bat 'mvn clean package -DskipTests'
+                    }
+                }
             }
         }
 
         stage('Test') {
             steps {
-                echo 'Running tests...'
-                sh 'mvn test'
+                echo '🧪 Running tests...'
+                script {
+                    if (isUnix()) {
+                        sh 'mvn test'
+                    } else {
+                        bat 'mvn test'
+                    }
+                }
             }
         }
 
         stage('Deploy') {
             steps {
-                echo 'Starting application...'
-                sh 'nohup java -jar target/aws-sqs-demo-1.0.0.jar > app.log 2>&1 &'
+                echo '🚀 Starting application...'
+                script {
+                    if (isUnix()) {
+                        sh 'nohup java -jar target/aws-sqs-demo-1.0.0.jar > app.log 2>&1 &'
+                    } else {
+                        bat 'start /B java -jar target\\aws-sqs-demo-1.0.0.jar > app.log 2>&1'
+                    }
+                }
             }
         }
     }
