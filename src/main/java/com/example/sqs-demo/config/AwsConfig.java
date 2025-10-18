@@ -11,7 +11,7 @@ public class AwsConfig {
     @Bean
     public SqsClient sqsClient() {
         return SqsClient.builder()
-                .region(Region.AP_SOUTH_1) // Change region accordingly
+                .region(Region.AP_SOUTH_1) // Change region as needed
                 .build();
     }
 }
