@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/<your-username>/aws-sqs-demo.git'
+                git branch: 'main', url: 'https://github.com/dinesh12-pm/aws-sqs.git'
             }
         }
 

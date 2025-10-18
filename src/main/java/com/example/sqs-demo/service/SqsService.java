@@ -14,7 +14,7 @@ public class SqsService {
     private final SqsClient sqsClient;
 
     // Replace with your actual queue URL
-    private static final String QUEUE_URL = "https://sqs.ap-south-1.amazonaws.com/<your-account-id>/my-demo-queue";
+    private static final String QUEUE_URL = "https://sqs.ap-south-1.amazonaws.com/857843340399/aws-sqs";
 
     public String sendMessage(String messageBody) {
         SendMessageRequest request = SendMessageRequest.builder()
